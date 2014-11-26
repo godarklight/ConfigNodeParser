@@ -1,0 +1,9 @@
+*.orig
+*.dll
+*.userprefs
+*.suo
+*.csproj.user
+ConfigNode/bin/*
+ConfigNode/obj/*
+ConfigNodeTest/bin/*
+ConfigNodeTest/obj/*
