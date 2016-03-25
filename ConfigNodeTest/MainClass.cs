@@ -24,11 +24,17 @@ namespace ConfigNodeTest
                 Console.WriteLine("Key1: " + value);
             }
             */
-            ConfigNode cn = ConfigNode.Load("GDL MassiveLift 2.craft");
-            Console.WriteLine(cn);
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+            ConfigNode cn = ConfigNode.Load("GDL Moho Refueller.craft");
+            sw.Stop();
             Console.WriteLine("cn nodes: " + cn.CountNodes + ", values: " + cn.CountValues);
-
-            cn.Save("GDL MassiveLift 2 - test.craft");
+            Console.WriteLine("Load Time: " + sw.ElapsedMilliseconds);
+            sw.Reset();
+            sw.Start();
+            cn.Save("GDL Moho Refueller - test.craft");
+            sw.Stop();
+            Console.WriteLine("Save Time: " + sw.ElapsedMilliseconds);
         }
     }
 }

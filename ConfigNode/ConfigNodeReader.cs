@@ -8,62 +8,40 @@ namespace ConfigNodeParser
     {
         public static ConfigNode StringToConfigNode(string inputString)
         {
-            ConfigNode returnNode = new ConfigNode();
+            ConfigNode node = null;
             using (StringReader sr = new StringReader(inputString))
             {
-                int objectLevel = 0;
-                string passName = "";
-                StringBuilder passData = null;
-                string previousLine = null;
-                string currentLine = null;
-                while ((currentLine = sr.ReadLine()) != null)
-                {
-                    string trimmedLine = currentLine.TrimStart();
-                    //Take note of depth
-                    if (trimmedLine == "{")
-                    {
-                        objectLevel++;
-                        //Started reading a config node block
-                        if (objectLevel == 1)
-                        {
-                            passName = previousLine;
-                            passData = new StringBuilder();
-                            continue;
-                        }
-                    }
-                    if (trimmedLine == "}")
-                    {
-                        objectLevel--;
-                        if (objectLevel == 0)
-                        {
-                            //Finished reading a config node block
-                            ConfigNode newNode = StringToConfigNode(passData.ToString());
-                            newNode.name = passName;
-                            returnNode.AddConfigNode(newNode);
-                            passName = null;
-                            passData = null;
-                            continue;
-                        }
-                    }
-                    if (objectLevel == 0)
-                    {
-                        //We are reading a config node at our depth
-                        if (trimmedLine.Contains(" = "))
-                        {
-                            string pairKey = trimmedLine.Substring(0, trimmedLine.IndexOf(" = "));
-                            string pairValue = trimmedLine.Substring(trimmedLine.IndexOf(" = ") + 3);
-                            returnNode.AddValue(pairKey, pairValue);
-                        }
-                    }
-                    else
-                    {
-                        //We are reading a different node
-                        passData.AppendLine(currentLine);
-                    }
-                    previousLine = trimmedLine;
-                }
+                node = BuildConfigNode(sr, null);
             }
-            return returnNode;
+            return node;
+        }
+
+        public static ConfigNode BuildConfigNode(StringReader sr, string name)
+        {
+            ConfigNode node = new ConfigNode();
+            node.name = name;
+            string previousLine = null;
+            string currentLine = null;
+            while ((currentLine = sr.ReadLine()) != null)
+            {
+                string trimmedLine = currentLine.TrimStart();
+                if (trimmedLine == "{")
+                {
+                    node.AddConfigNode(BuildConfigNode(sr, previousLine));
+                }
+                if (trimmedLine == "}")
+                {
+                    return node;
+                }
+                if (trimmedLine.Contains(" = "))
+                {
+                    string pairKey = trimmedLine.Substring(0, trimmedLine.IndexOf(" = "));
+                    string pairValue = trimmedLine.Substring(trimmedLine.IndexOf(" = ") + 3);
+                    node.AddValue(pairKey, pairValue);
+                }
+                previousLine = trimmedLine;
+            }
+            return node;
         }
 
         public static ConfigNode FileToConfigNode(string inputFile)
