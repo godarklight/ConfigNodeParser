@@ -7,3 +7,5 @@ ConfigNode/bin/*
 ConfigNode/obj/*
 ConfigNodeTest/bin/*
 ConfigNodeTest/obj/*
+DotNet/bin/*
+DotNet/obj/*
