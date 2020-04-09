@@ -3,5 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../ConfigNode/ConfigNodeReader.cs"/>
+    <Compile Include="../ConfigNode/ConfigNode.cs"/>
+    <Compile Include="../ConfigNode/ConfigNodeWriter.cs"/>
+  </ItemGroup>
 
 </Project>

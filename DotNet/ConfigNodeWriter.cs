@@ -1,1 +1,0 @@
-../ConfigNode/ConfigNodeWriter.cs
