@@ -26,13 +26,13 @@ namespace ConfigNodeTest
             */
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
-            ConfigNode cn = ConfigNode.Load("GDL Moho Refueller.craft");
+            ConfigNode cn = ConfigNode.Load("test.craft");
             sw.Stop();
             Console.WriteLine("cn nodes: " + cn.CountNodes + ", values: " + cn.CountValues);
             Console.WriteLine("Load Time: " + sw.ElapsedMilliseconds);
             sw.Reset();
             sw.Start();
-            cn.Save("GDL Moho Refueller - test.craft");
+            cn.Save("test2.craft");
             sw.Stop();
             Console.WriteLine("Save Time: " + sw.ElapsedMilliseconds);
         }
